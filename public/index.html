@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Object Detection with Flickr Search</title>
+    <style>
+        #progressBar {
+            width: 100%;
+            background-color: #e0e0e0;
+        }
+        #progress {
+            height: 30px;
+            background-color: #76c7c0;
+            width: 0%;
+        }
+        #loadingSpinner {
+            display: none;
+            /* ...other styles... */
+        }
+
+        #loadingSpinner.show {
+            display: block;
+        }
+        #resultImage {
+            max-width: 100%;
+            height: auto;
+            display: none;
+        }
+        /* Additional styles for search input and buttons */
+        #searchForm {
+            margin-bottom: 20px;
+        }
+        #navigationButtons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Object Detection with Flickr Search</h1>
+    <!-- Search form for Flickr image search -->
+    <form id="searchForm">
+        <input type="text" id="searchTerm" name="search" placeholder="Search Flickr images" required>
+        <button type="submit">Search and Analyze</button>
+    </form>
+    <!-- Navigation buttons -->
+    <div id="navigationButtons">
+        <button id="prevButton" type="button">Previous</button>
+        <button id="nextButton" type="button">Next</button>
+    </div>
+    <!-- Progress bar -->
+    <div id="progressBar">
+        <div id="progress"></div>
+    </div>
+    <!-- Status text and spinner -->
+    <div id="statusText">Status: Waiting for search...</div>
+    <div id="loadingSpinner">Processing...</div>
+    <!-- Result section -->
+    <div id="result">
+        <h3>Predictions:</h3>
+        <ul id="predictionsList"></ul>
+        <img id="resultImage" alt="Annotated Result">
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>
