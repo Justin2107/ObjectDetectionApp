@@ -1,2 +1,2 @@
-# CAB432-CloudApp
-Assessment 2 cloud application
+# Flickr Image Object Detection Application
+Application showcase
