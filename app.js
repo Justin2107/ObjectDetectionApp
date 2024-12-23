@@ -9,7 +9,7 @@ const crypto = require('crypto');
 const mime = require('mime-types');
 const redis = require('redis');
 require('dotenv').config();
-const AWS = require('aws-sdk');
+// const AWS = require('aws-sdk');
 const { createFlickr, APIKeyAuth } = require('flickr-sdk');
 const https = require('https');
 
@@ -19,7 +19,7 @@ const uploadDir = 'uploads';
 const annotatedDir = 'annotated_videos';
 const framesDir = path.join('uploads', 'frames');
 
-const flickrKey = process.env.flickr_key;
+const flickrKey = "368ceefc84c0bd15fa71e48371879b96"
 
 // Redis setup
 const redisClient = redis.createClient();
@@ -33,19 +33,19 @@ const redisClient = redis.createClient();
 
 // Cloud Services Set-up 
 const bucketName = "n10262806-cloud-project";
-const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+// const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
-(async () => {
-  try {
-    await s3.createBucket({ Bucket: bucketName }).promise();
-    console.log(`Created bucket: ${bucketName}`);
-  } catch (err) {
-    // We will ignore 409 errors which indicate that the bucket already exists
-    if (err.statusCode !== 409) {
-      console.log(`Error creating bucket: ${err}`);
-    }
-  }
-})();
+// (async () => {
+//   try {
+//     await s3.createBucket({ Bucket: bucketName }).promise();
+//     console.log(`Created bucket: ${bucketName}`);
+//   } catch (err) {
+//     // We will ignore 409 errors which indicate that the bucket already exists
+//     if (err.statusCode !== 409) {
+//       console.log(`Error creating bucket: ${err}`);
+//     }
+//   }
+// })();
 
 // Ensure upload and annotated directories exist
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
@@ -99,7 +99,7 @@ app.get('/search', async (req, res) => {
           
           const imageHash = await calculateFileHash(imagePath);
           const redisKey = `object-detection:${imageHash}`;  // Create a unique key for Redis
-          const s3Key = `object-detection-${imageHash}.json`;  // Key for storing JSON in S3
+          // const s3Key = `object-detection-${imageHash}.json`;  // Key for storing JSON in S3
 
           // Check in Redis
           const cachedResult = await redisClient.get(redisKey);
@@ -111,18 +111,18 @@ app.get('/search', async (req, res) => {
           }
 
           // Check in S3
-          try {
-            const s3Result = await s3.getObject({ Bucket: bucketName, Key: s3Key }).promise();
-            console.log("Fetched from S3 Bucket");
-            results = JSON.parse(s3Result.Body.toString())
-            await annotateImageFromCache(imagePath, results.predictions)
-            return res.json(JSON.parse(s3Result.Body.toString()));
-          } catch (err) {
-            if (err.statusCode !== 404) { // Not found error
-              console.error('Error fetching from S3:', err);
-              return res.status(500).send('Error fetching from S3');
-            }
-          }
+          // try {
+          //   const s3Result = await s3.getObject({ Bucket: bucketName, Key: s3Key }).promise();
+          //   console.log("Fetched from S3 Bucket");
+          //   results = JSON.parse(s3Result.Body.toString())
+          //   await annotateImageFromCache(imagePath, results.predictions)
+          //   return res.json(JSON.parse(s3Result.Body.toString()));
+          // } catch (err) {
+          //   if (err.statusCode !== 404) { // Not found error
+          //     console.error('Error fetching from S3:', err);
+          //     return res.status(500).send('Error fetching from S3');
+          //   }
+          // }
 
           // After downloading, run the object detection model
           try {
@@ -141,11 +141,11 @@ app.get('/search', async (req, res) => {
             
             // Store results in Redis and S3
             await redisClient.setEx(redisKey, 3600, JSON.stringify(responseData));
-            await s3.putObject({
-              Bucket: bucketName,
-              Key: s3Key,
-              Body: JSON.stringify(responseData)
-            }).promise();
+            // await s3.putObject({
+            //   Bucket: bucketName,
+            //   Key: s3Key,
+            //   Body: JSON.stringify(responseData)
+            // }).promise();
             return res.json(responseData);
           } catch (error) {
             console.error('Error processing image:', error);
