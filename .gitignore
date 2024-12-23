@@ -1,5 +1,51 @@
+# Node.js dependencies
 node_modules/
+
+# Environment files
+.env
+
+# Uploads directory (excluding the directory itself)
 uploads/**/*.mp4
 uploads/**/*.png
 uploads/**/*.jpg
+
+# Annotated videos
 annotated_videos/**/*.mp4
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Local IDE files (e.g., VSCode, JetBrains, etc.)
+.vscode/
+.idea/
+
+# NPM logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# package-lock.json or yarn.lock if you don't want to track them
+# package-lock.json
+# yarn.lock
+
+# Temporary files
+*.tmp
+*.swp
+
+# Exclude any compiled code or build files
+dist/
+build/
+
+# Exclude coverage reports (e.g., from testing)
+coverage/
+
+# Files created by operating systems
+Thumbs.db
+.DS_Store
+
+# Miscellaneous
+npm-debug.log*

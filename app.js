@@ -19,7 +19,7 @@ const uploadDir = 'uploads';
 const annotatedDir = 'annotated_videos';
 const framesDir = path.join('uploads', 'frames');
 
-const flickrKey = "368ceefc84c0bd15fa71e48371879b96"
+const flickrKey = process.env.FLICKR_KEY;
 
 // Redis setup
 const redisClient = redis.createClient();
